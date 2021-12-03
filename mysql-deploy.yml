@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bdcrud
+  labels:
+    app: webapp
+    tier: backend
+spec:
+  selector:
+    matchLabels:
+      app: webapp
+      tier: backend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: webapp
+        tier: backend
+    spec:
+      containers:
+      - image: mayra10/bd
+        name: mysql
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - name: mysql-almacenamiento-persistente
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-almacenamiento-persistente
+        persistentVolumeClaim:
+          claimName: mysql-pvc

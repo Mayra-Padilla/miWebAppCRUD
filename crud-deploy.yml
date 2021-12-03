@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crud-appweb
+  labels:
+    app: webapp
+    tier: frontend
+spec:
+  selector:
+    matchLabels:
+      app: webapp
+      tier: frontend
+  replicas: 7
+  template:
+    metadata:
+      labels:
+        app: webapp
+        tier: frontend
+    spec:
+      containers:
+      - name: crud-appweb
+        image: mayra10/crudweb
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8081
